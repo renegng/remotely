@@ -6,7 +6,7 @@ services:
     container_name: remotely
     command: gunicorn -k eventlet -w 1 -b 0.0.0.0:8000 -m 007 swing_main-socketio:app
     ports:
-      -5000:5000
+      - 8000:8000
     volumes:
       - data_static:/var/www/remotely/static
     depends_on:

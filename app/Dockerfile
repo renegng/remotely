@@ -1,5 +1,5 @@
 # Official Python 3.8 image
-FROM python:3.8-alpine
+FROM ubuntu:20.04
 
 # Create the app folder
 RUN mkdir -p /var/www/remotely
@@ -11,24 +11,31 @@ COPY . /var/www/remotely
 WORKDIR /var/www/remotely
 
 # Install system dependencies
-RUN apk --no-cache add curl
-RUN apt-get update && apt-get install build-essential python3-dev
+RUN apt-get update
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get install -y python3.8 python3-pip
+RUN apt-get install -y build-essential python3-dev libmysqlclient-dev
+
+# Install NodeJS v14
+RUN apt-get install -y curl
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
 
 # Install python dependencies
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Install NodeJS v14
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-RUN sudo apt-get install -y nodejs
-
 # Install node dependencies
 RUN npm install
 RUN npm install -g npm
-RUN npm run build-prd-wp
 
 # UnZip credentials
-RUN unzip -P Remote2021 instance.zip
+RUN apt-get install -y p7zip-full
+RUN 7z x instance.zip -pRemote2021
+
+# Compile all npm libraries
+RUN npm run build-prd-wp
 
 # Expose port
 EXPOSE 8000
