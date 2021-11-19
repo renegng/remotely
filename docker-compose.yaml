@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    build: ./app
+    container_name: remotely
+    command: gunicorn -k eventlet -w 1 -b 0.0.0.0:8000 -m 007 swing_main-socketio:app
+    ports:
+      -5000:5000
+    volumes:
+      - data_static:/var/www/remotely/static
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:14-alpine
+    container_name: psql
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=R3m0Te1y2021**
+      - POSTGRES_USER=remotely_dba
+      - POSTGRES_DB=remotely
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  data_static:
+    driver: local
+  db_data:
+    driver: local
+    
