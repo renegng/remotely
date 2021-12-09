@@ -1,5 +1,5 @@
-# Swing CMS - Contact-Os
-Contact-Os, Progressive Web App
+# Swing CMS - Remotely
+Remotely, Progressive Web App
 
 -RXDBit
 

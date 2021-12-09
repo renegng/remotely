@@ -1,7 +1,7 @@
 {
-    "name": "Contact-Os",
-    "short_name": "Contact-Os",
-    "description": "Contact-Os, Remote Assistance Communication App",
+    "name": "Remotely",
+    "short_name": "Remotely",
+    "description": "Remotely, Remote Assistance Communication App",
     "start_url": "/",
     "display": "standalone",
     "theme_color": "#01579b",
