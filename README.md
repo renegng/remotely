@@ -61,3 +61,9 @@ En una consola de comandos, es necesario ejecutar los siguientes comandos:
 
     - https://localhost en caso se ejecute localmente o con acceso local al servidor o 
     - https://IP_PUBLICA_O_DOMINIO en donde la palabra IP_PUBLICA se reemplaza por los números de la ip pública que se posee o por el dominio adquirido.
+
+# Autores
+
+Nidia Hidalgo - Especialista Lider, División de Género y Diversidad, BID.
+Dinys Luciano - Consultora Experta en Violencia Contra las Mujeres.
+René Navarrete - Consultor Experto en Tecnologia.

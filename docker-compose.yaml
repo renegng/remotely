@@ -1,17 +1,6 @@
 version: '3'
 
 services:
-  app:
-    build: ./app
-    container_name: remotely
-    command: gunicorn -k eventlet -w 1 -b 0.0.0.0:8000 -m 007 swing_main-socketio:app
-    ports:
-      - 8000:8000
-    volumes:
-      - data_static:/var/www/remotely/static
-    depends_on:
-      - db
-  
   db:
     image: postgres:14-alpine
     container_name: psql
@@ -20,12 +9,77 @@ services:
       - POSTGRES_PASSWORD=R3m0Te1y2021**
       - POSTGRES_USER=remotely_dba
       - POSTGRES_DB=remotely
+    networks:
+      - db_network
     volumes:
       - db_data:/var/lib/postgresql/data
 
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.2
+    container_name: elasticsearch
+    environment:
+      - node.name=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - es_network
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+  
+  app:
+    build: ./app
+    image: renegng/remotely:0.2.0
+    container_name: remotely
+    ports:
+      - 8000:8000
+    networks:
+      - db_network
+      - es_network
+      - app_network
+    volumes:
+      - ng_data:/etc/nginx/conf.d
+      - remotely_static:/var/www/remotely/static
+      - ssl_data:/etc/letsencrypt
+    depends_on:
+      - db
+      - es
+
+  nginx:
+    build: ./services/nginx
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    networks:
+      - app_network
+    volumes:
+      - remotely_static:/var/www/remotely/static
+      - ng_data:/etc/nginx/conf.d
+      - ssl_data:/etc/nginx/ssl
+    depends_on:
+      - app
+
+networks:
+  db_network:
+    driver: bridge
+  es_network:
+    driver: bridge
+  app_network:
+    driver: bridge
+
 volumes:
-  data_static:
+  remotely_static:
     driver: local
   db_data:
+    driver: local
+  es_data:
+    driver: local
+  ng_data:
+    driver: local
+  ssl_data:
     driver: local
     
