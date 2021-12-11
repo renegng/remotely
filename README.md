@@ -1,9 +1,11 @@
 # Remotely
-CMS para la Asistencia Remota - Back End
+CMS para la Asistencia Remota
 
 Remotely es una plataforma personalizable orientada a la atención remota de personas mujeres que han experimentado algún tipo de violencia.
 
 Remotely tiene por base el código fuente de Contact-Os, el cual es la base para las plataformas 126 Te Orienta en El Salvador y Conecta en Honduras.
+
+<p align="center"><img src="app/static/images/manifest/remotely-15.svg" width="512"/></p>
 
 # Requerimientos
 
