@@ -67,5 +67,7 @@ En una consola de comandos, es necesario ejecutar los siguientes comandos:
 # Autores
 
 Nidia Hidalgo - Especialista Lider, División de Género y Diversidad, BID.
+
 Dinys Luciano - Consultora Experta en Violencia Contra las Mujeres.
+
 René Navarrete - Consultor Experto en Tecnologia.
